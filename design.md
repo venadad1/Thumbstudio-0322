@@ -1,0 +1,7 @@
+# Thumb Studio
+English-language professional YouTube thumbnail workspace. Graphite panels, warm orange primary action, muted stone text, fine 1px borders. No gradients on UI; photography is the visual focus.
+Typography: Poppins for UI, Bebas Neue for thumbnail display; 25 self-hosted fonts for text layers. Small uppercase tracking labels, 13px controls, bold 26px page heading.
+Layout: 64px top bar, 70px icon navigation rail, 292px creation panel, flexible central canvas workspace, 280px contextual properties. Canvas sits on a subtle dot grid, 16:9 with native 1280×720 output. Bottom contextual tips and starter scene strip.
+Colors: #101113 workspace, #191a1e panels, #232429 controls, #34353c borders, #f6f4ef text, #8e909a muted, #ff8549 accent, #a8cbb6 success.
+UX: directly selectable/drag-and-rotate layers, independent text controls, three persistent text slots, five sticker max. Toolbar undo/redo, preview and PNG export. API settings only after seven clicks on page title; masked secret kept in memory, never project storage. Negative instructions folded into Z-Image prompt since provider has no negative_prompt parameter.
+Image style control: compact English-language dropdown above the prompt, matching existing graphite controls. Ten named styles with a one-line description, plus a neutral "Use prompt only" option for existing projects. Style adds instructions to generation, not a filter on the current canvas. Preserve the selection in project saves and backups.

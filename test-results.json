@@ -1,0 +1,16 @@
+[
+  "Editor loads without page errors",
+  "API dialog opens only on seventh click; masked key not saved",
+  "25 font choices, distinct fonts load and text editing works",
+  "Curve, skew, spacing, rotation and full color picker apply independently",
+  "Five-sticker maximum enforced",
+  "Mouse dragging moves sticker on canvas",
+  "Mouse rotation handle rotates sticker",
+  "Uploaded stickers supported",
+  "Undo and redo restore layer changes",
+  "Full and small preview; native 1280x720 PNG export",
+  "Projects saved and backed up without credentials",
+  "Draft persists after reload; API key does not",
+  "Mobile layout has no horizontal overflow",
+  "No JavaScript errors during interaction tests"
+]
