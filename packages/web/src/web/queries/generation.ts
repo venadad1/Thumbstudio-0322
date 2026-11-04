@@ -4,6 +4,9 @@ import { orpc } from "../lib/api";
 export function useGenerate() {
   return useMutation(orpc.generation.create.mutationOptions());
 }
+export function useCheckApiConnection() {
+  return useMutation(orpc.ping.mutationOptions());
+}
 export function useGenerationStatus(apiKey: string, taskId: string, active: boolean) {
   return useQuery(
     orpc.generation.status.queryOptions({

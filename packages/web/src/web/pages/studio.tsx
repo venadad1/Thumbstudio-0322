@@ -41,7 +41,8 @@ import {
   type Project,
   type Layer,
 } from "../lib/editor";
-import { useGenerate, useGenerationStatus } from "../queries/generation";
+import { useGenerate, useGenerationStatus, useCheckApiConnection } from "../queries/generation";
+import { generationErrorMessage } from "../lib/generation-errors";
 import { buildImagePrompt, imageStyles, type ImageStyleId } from "../../shared/image-styles";
 
 type Modal = "api" | "help" | "projects" | "preview" | null;
@@ -102,6 +103,7 @@ export default function Studio() {
   const importProject = useRef<HTMLInputElement>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const generate = useGenerate();
+  const checkApi = useCheckApiConnection();
   const status = useGenerationStatus(key, task, generating);
   const layer = project.layers.find((l) => l.id === selected);
   const stickerCount = project.layers.filter((l) => l.kind === "sticker").length;
@@ -165,7 +167,7 @@ export default function Studio() {
   useEffect(() => {
     if (status.error) {
       setGenerating(false);
-      notify(status.error.message);
+      notify(generationErrorMessage(status.error));
     }
   }, [status.error, notify]);
   useEffect(() => {
@@ -217,6 +219,8 @@ export default function Studio() {
     setGenerating(true);
     setTask("");
     try {
+      // Check the deployment before sending a private key or creating a paid task.
+      await checkApi.mutateAsync(undefined);
       const result = await generate.mutateAsync({
         apiKey: key,
         prompt,
@@ -226,7 +230,7 @@ export default function Studio() {
       setTask(result.taskId);
     } catch (e) {
       setGenerating(false);
-      notify(e instanceof Error ? e.message : "Generation failed.");
+      notify(generationErrorMessage(e));
     }
   }
   async function exportPNG() {
