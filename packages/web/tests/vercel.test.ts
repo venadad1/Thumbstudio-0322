@@ -1,10 +1,12 @@
 import { expect, test } from "bun:test";
-import entry from "../../../api/handler";
+import entry from "../src/api/vercel-handler";
 import config from "../../../vercel.json";
 import { generationErrorMessage } from "../src/web/lib/generation-errors";
 
 test("Vercel routes send API traffic to the function before the SPA fallback", () => {
   expect(config.outputDirectory).toBe("packages/web/dist");
+  expect(config.buildCommand).toBe("bun run build:vercel");
+  expect(config.functions["api/handler.mjs"].maxDuration).toBe(90);
   expect(config.routes[0]).toEqual({ src: "/api/(.*)", dest: "/api/handler?route=$1" });
   expect(config.routes[1]).toEqual({ handle: "filesystem" });
   expect(config.routes[2]).toEqual({ src: "/(.*)", dest: "/index.html" });
@@ -53,7 +55,7 @@ test("Deployment-check ping works through the Vercel entry", async () => {
 
 test("Missing-backend errors identify Vercel deployment configuration", () => {
   const message = generationErrorMessage({ code: "NOT_FOUND", status: 404, message: "Not Found" });
-  expect(message).toContain("api/handler.ts");
+  expect(message).toContain("api/handler.mjs");
   expect(message).toContain("vercel.json");
   expect(generationErrorMessage({ status: 400, message: "Invalid Kie.ai key" })).toBe(
     "Invalid Kie.ai key",

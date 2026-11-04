@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build:vercel": "bun build packages/web/src/api/vercel-handler.ts --target=node --outfile=api/handler.mjs && bun run --filter @template/web build",
     "dev": "cd packages/web && bunx vite",
     "dev:desktop": "cd packages/desktop && bunx vite",
     "dev:mobile": "cd packages/mobile && bunx expo start --port $(bun --print \"require('../../__ports.cjs').mobile\")",
